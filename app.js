@@ -11,6 +11,7 @@ var colorArray = ["IndianRed","LightCoral","Salmon","DarkSalmon","LightSalmon","
               "LightSkyBlue","DeepSkyBlue","DodgerBlue","CornflowerBlue" ,"MediumSlateBlue","RoyalBlue","Blue","MediumBlue","DarkBlue" ,"Navy","MidnightBlue","Cornsilk","BlanchedAlmond","Bisque","NavajoWhite","Wheat","BurlyWood","Tan","RosyBrown","SandyBrown","Goldenrod","DarkGoldenrod",
               "Peru","Chocolate","SaddleBrown","Sienna","Brown","Maroon","White","Snow","Honeydew","MintCream","Azure","AliceBlue","GhostWhite","WhiteSmoke","Seashell","Beige","OldLace","FloralWhite","Ivory","AntiqueWhite","Linen","LavenderBlush","MistyRose","Gainsboro","LightGrey",
               "Silver","DarkGray","Gray","DimGray","LightSlateGray","SlateGray","DarkSlateGray","Black"];
+var mouseDown = ''
 
 
 function makeGrid(number) {
@@ -27,7 +28,7 @@ function makeGrid(number) {
   }
 }
 
-makeGrid(50);
+makeGrid(40);
 
 function newColor(colorArray){
   for(var i=0; i < colorArray.length; i++){
@@ -41,16 +42,19 @@ function newColor(colorArray){
 
 newColor(colorArray);
 
-
 function colorAssigner(){
+  this.style.background= color;
+  this.style.color= color;
+}
+
+
+function boxesColorAssigner(){
   for(var i=0; i< boxes.length; i++){
-    boxes[i].onclick = function(){
-      this.style.background= color;
-      this.style.color= color;
-    }
+    boxes[i].addEventListener("click", colorAssigner)
   }
 }
-colorAssigner();
+
+boxesColorAssigner();
 
 function colorPicker(){
   for(var i=0; i< colors.length; i++){
@@ -61,3 +65,22 @@ function colorPicker(){
 }
 
 colorPicker();
+
+function colorMouseDown(){
+  for(var i=0; i<boxes.length; i++){
+    if(boxes[i].mousedown){
+      that = this;
+      this.mousedown = function(){
+        that.addEventListener("mouseover", boxesColorAssigner);
+      }
+    }
+    else if (boxes[i].mouseup){
+      that = this;
+      this.mouseup = function(){
+        color = "";
+      }
+    }
+  }
+}
+
+colorMouseDown();

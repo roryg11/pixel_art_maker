@@ -1,5 +1,16 @@
 #container {
   background: white;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#filler {
+  background: white;
+  float:left;
+}
+
+h1{
+  text-align: center;
 }
 .row {
 }
